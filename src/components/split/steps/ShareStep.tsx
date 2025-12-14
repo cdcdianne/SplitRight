@@ -155,7 +155,7 @@ export function ShareStep() {
           <h3 className="text-xl font-bold gradient-primary bg-clip-text text-white">
             SplitRight
           </h3>
-          <p className="text-sm text-muted-foreground">Receipt Split</p>
+          <p className="text-sm text-gray-600 dark:text-muted-foreground">Receipt Split</p>
         </div>
 
         {/* Store Name and Date/Time */}
@@ -163,12 +163,12 @@ export function ShareStep() {
           <div className="pb-3 border-b border-border space-y-1">
             {data.storeName && (
               <div className="text-center">
-                <p className="text-sm font-semibold">{data.storeName}</p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-foreground">{data.storeName}</p>
               </div>
             )}
             {data.dateTime && (
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">{data.dateTime}</p>
+                <p className="text-xs text-gray-600 dark:text-muted-foreground">{data.dateTime}</p>
               </div>
             )}
           </div>
@@ -190,9 +190,9 @@ export function ShareStep() {
                     >
                       {person.name[0]}
                     </div>
-                    <span className="font-medium">{person.name}</span>
+                    <span className="font-medium text-gray-900 dark:text-foreground">{person.name}</span>
                   </div>
-                  <span className="text-lg font-bold">
+                  <span className="text-lg font-bold text-gray-900 dark:text-foreground">
                     {formatCurrency(share, data.currency)}
                   </span>
                 </div>
@@ -204,7 +204,7 @@ export function ShareStep() {
                       const splitCount = item.assignedTo.length;
                       const itemShare = (item.price * item.quantity) / splitCount;
                       return (
-                        <div key={item.id} className="flex justify-between text-muted-foreground">
+                        <div key={item.id} className="flex justify-between text-gray-600 dark:text-muted-foreground">
                           <span>
                             {item.name}
                             {splitCount > 1 && ` (÷${splitCount})`}
@@ -216,7 +216,7 @@ export function ShareStep() {
                     {(data.tax > 0 || data.tipValue > 0) && (
                       <>
                         {data.tax > 0 && (
-                          <div className="flex justify-between text-muted-foreground">
+                          <div className="flex justify-between text-gray-600 dark:text-muted-foreground">
                             <span>Tax</span>
                             <span>
                               {formatCurrency(
@@ -229,7 +229,7 @@ export function ShareStep() {
                           </div>
                         )}
                         {data.tipValue > 0 && (
-                          <div className="flex justify-between text-muted-foreground">
+                          <div className="flex justify-between text-gray-600 dark:text-muted-foreground">
                             <span>Tip</span>
                             <span>
                               {formatCurrency(
@@ -251,36 +251,36 @@ export function ShareStep() {
         </div>
 
         <div className="pt-3 border-t border-border flex justify-between items-center">
-          <span className="text-muted-foreground">Total</span>
-          <span className="text-xl font-bold">{formatCurrency(total, data.currency)}</span>
+          <span className="text-gray-700 dark:text-muted-foreground font-medium">Total</span>
+          <span className="text-xl font-bold text-gray-900 dark:text-foreground">{formatCurrency(total, data.currency)}</span>
         </div>
 
         {/* Payment Information */}
         {data.paymentInfo?.method && (
           <div className="pt-3 border-t border-border space-y-2">
-            <div className="text-sm font-medium text-muted-foreground">Payment Method</div>
+            <div className="text-sm font-medium text-gray-700 dark:text-muted-foreground">Payment Method</div>
             <div className="text-sm">
               {data.paymentInfo.method === 'bank' && data.paymentInfo.bankAccountNumber && (
                 <div>
-                  <div className="font-medium">Bank Transfer</div>
-                  <div className="text-muted-foreground">Account: {data.paymentInfo.bankAccountNumber}</div>
+                  <div className="font-medium text-gray-900 dark:text-foreground">Bank Transfer</div>
+                  <div className="text-gray-700 dark:text-muted-foreground">Account: {data.paymentInfo.bankAccountNumber}</div>
                 </div>
               )}
               {data.paymentInfo.method === 'venmo' && data.paymentInfo.venmoHandle && (
                 <div>
-                  <div className="font-medium">Venmo: @{data.paymentInfo.venmoHandle}</div>
+                  <div className="font-medium text-gray-900 dark:text-foreground">Venmo: @{data.paymentInfo.venmoHandle}</div>
                 </div>
               )}
               {data.paymentInfo.method === 'paypal' && data.paymentInfo.paypalInfo && (
                 <div>
-                  <div className="font-medium">PayPal: {data.paymentInfo.paypalInfo}</div>
+                  <div className="font-medium text-gray-900 dark:text-foreground">PayPal: {data.paymentInfo.paypalInfo}</div>
                 </div>
               )}
               {data.paymentInfo.method === 'custom' && data.paymentInfo.customMethod && (
                 <div>
-                  <div className="font-medium">{data.paymentInfo.customMethod}</div>
+                  <div className="font-medium text-gray-900 dark:text-foreground">{data.paymentInfo.customMethod}</div>
                   {data.paymentInfo.customDetails && (
-                    <div className="text-muted-foreground">{data.paymentInfo.customDetails}</div>
+                    <div className="text-gray-700 dark:text-muted-foreground">{data.paymentInfo.customDetails}</div>
                   )}
                 </div>
               )}

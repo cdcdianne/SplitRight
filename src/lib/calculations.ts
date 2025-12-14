@@ -199,3 +199,11 @@ export function generateShareableText(data: SplitData, showDetails: boolean = fa
 export function generateId(): string {
   return Math.random().toString(36).substring(2, 11);
 }
+
+export function capitalizeName(name: string): string {
+  return name
+    .trim()
+    .split(/\s+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}

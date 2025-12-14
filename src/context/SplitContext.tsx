@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { SplitData, SplitStep, Person, ReceiptItem, PERSON_COLORS, PaymentMethod, PaymentInfo } from '@/lib/types';
 import { saveSplitData, loadSplitData, clearSplitData, getDefaultSplitData } from '@/lib/storage';
-import { generateId } from '@/lib/calculations';
+import { generateId, capitalizeName } from '@/lib/calculations';
 
 interface SplitContextType {
   data: SplitData;
@@ -80,7 +80,7 @@ export function SplitProvider({ children }: { children: React.ReactNode }) {
       const colorIndex = prev.people.length % PERSON_COLORS.length;
       const newPerson: Person = {
         id: generateId(),
-        name: name.trim(),
+        name: capitalizeName(name),
         color: PERSON_COLORS[colorIndex],
       };
       return { ...prev, people: [...prev.people, newPerson] };
@@ -91,7 +91,7 @@ export function SplitProvider({ children }: { children: React.ReactNode }) {
     setData(prev => ({
       ...prev,
       people: prev.people.map(p => 
-        p.id === id ? { ...p, name: name.trim() } : p
+        p.id === id ? { ...p, name: capitalizeName(name) } : p
       ),
     }));
   }, []);

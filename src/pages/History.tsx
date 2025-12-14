@@ -33,6 +33,7 @@ import {
   generateShareableText 
 } from '@/lib/calculations';
 import { useToast } from '@/hooks/use-toast';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function History() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -229,7 +230,9 @@ export default function History() {
                 </p>
               </div>
             </div>
-            {history.length > 0 && (
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              {history.length > 0 && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" size="sm">
@@ -252,7 +255,8 @@ export default function History() {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-            )}
+              )}
+            </div>
           </div>
         </motion.div>
 
@@ -287,7 +291,7 @@ export default function History() {
                       <div className="flex-1">
                         <CardTitle className="flex items-center gap-2 mb-2">
                           <Calendar className="w-4 h-4 text-muted-foreground" />
-                          {formatDate(entry.timestamp)}
+                          {entry.data.storeName || 'No store name'}
                         </CardTitle>
                         <CardDescription className="flex items-center gap-4 flex-wrap mt-2">
                           <span className="flex items-center gap-1">

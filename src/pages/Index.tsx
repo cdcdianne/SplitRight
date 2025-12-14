@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Receipt, Users, Calculator, Share2, History } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const features = [
   {
@@ -12,23 +13,26 @@ const features = [
   {
     icon: Receipt,
     title: 'Scan or Add Items',
-    description: 'Take a photo or manually enter receipt items',
+    description: 'Take a photo of your receipt or manually enter items. Store name and date are automatically extracted.',
   },
   {
     icon: Calculator,
     title: 'Split Fairly',
-    description: 'Assign items and split tax & tip proportionally',
+    description: 'Assign items to people and split tax & tip proportionally or equally',
   },
   {
     icon: Share2,
-    title: 'Share Results',
-    description: 'Copy text or save an image to send your group',
+    title: 'Share & Pay',
+    description: 'Copy text or save an image. Add payment methods like Venmo, PayPal, or bank transfer details.',
   },
 ];
 
 const Index = () => {
   return (
     <div className="min-h-screen gradient-subtle safe-top safe-bottom">
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8">
+        <ThemeToggle />
+      </div>
       <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         {/* Hero */}
         <motion.div
