@@ -46,12 +46,12 @@ const Index = () => {
             transition={{ delay: 0.1 }}
             className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mx-auto rounded-3xl gradient-primary shadow-glow flex items-center justify-center"
           >
-            <Receipt className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-primary-foreground" />
+            <Receipt className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-white" />
           </motion.div>
 
           <div className="space-y-3 sm:space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-              <span className="gradient-primary bg-clip-text text-white">Split</span>
+              <span className="gradient-primary bg-clip-text text-white p-2">Split</span>
               <span className="text-foreground">Right</span>
             </h1>
             <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto text-balance">
