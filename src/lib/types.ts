@@ -42,7 +42,6 @@ export type SplitStep =
   | 'items'
   | 'assign'
   | 'tax-tip'
-  | 'rounding'
   | 'summary'
   | 'share';
 

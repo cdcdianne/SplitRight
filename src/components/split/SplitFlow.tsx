@@ -7,7 +7,6 @@ import { PeopleStep } from './steps/PeopleStep';
 import { ItemsStep } from './steps/ItemsStep';
 import { AssignStep } from './steps/AssignStep';
 import { TaxTipStep } from './steps/TaxTipStep';
-import { RoundingStep } from './steps/RoundingStep';
 import { SummaryStep } from './steps/SummaryStep';
 import { ShareStep } from './steps/ShareStep';
 import { Button } from '@/components/ui/button';
@@ -26,8 +25,6 @@ export function SplitFlow() {
         return <AssignStep key="assign" />;
       case 'tax-tip':
         return <TaxTipStep key="tax-tip" />;
-      case 'rounding':
-        return <RoundingStep key="rounding" />;
       case 'summary':
         return <SummaryStep key="summary" />;
       case 'share':

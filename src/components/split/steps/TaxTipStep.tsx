@@ -171,8 +171,8 @@ export function TaxTipStep() {
         <Button variant="outline" onClick={() => setCurrentStep('assign')} className="flex-1">
           Back
         </Button>
-        <Button onClick={() => setCurrentStep('rounding')} className="flex-1">
-          Rounding Options
+        <Button onClick={() => setCurrentStep('summary')} className="flex-1">
+          View Summary
         </Button>
       </div>
     </motion.div>

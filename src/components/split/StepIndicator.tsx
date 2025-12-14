@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion';
 import { SplitStep } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Users, Receipt, UserCheck, Calculator, Circle, ClipboardList, Share2 } from 'lucide-react';
+import { Users, Receipt, UserCheck, Calculator, ClipboardList, Share2 } from 'lucide-react';
 
 const STEPS: { key: SplitStep; label: string; icon: React.ElementType }[] = [
   { key: 'people', label: 'People', icon: Users },
   { key: 'items', label: 'Items', icon: Receipt },
   { key: 'assign', label: 'Assign', icon: UserCheck },
   { key: 'tax-tip', label: 'Tax & Tip', icon: Calculator },
-  { key: 'rounding', label: 'Round', icon: Circle },
   { key: 'summary', label: 'Summary', icon: ClipboardList },
   { key: 'share', label: 'Share', icon: Share2 },
 ];
@@ -24,7 +23,7 @@ export function StepIndicator({ currentStep, visitedSteps, onStepClick }: StepIn
 
   return (
     <div className=" overflow-x-auto pb-2 -mx-4 sm:mx-0 px-4 sm:px-0 scrollbar-hide pt-2">
-      <div className="flex items-center justify-between min-w-[600px] sm:min-w-0 sm:grid sm:grid-cols-7 gap-2 sm:gap-4">
+      <div className="flex items-center justify-between min-w-[500px] sm:min-w-0 sm:grid sm:grid-cols-6 gap-2 sm:gap-4">
         {STEPS.map((step, index) => {
           const Icon = step.icon;
           const isActive = step.key === currentStep;

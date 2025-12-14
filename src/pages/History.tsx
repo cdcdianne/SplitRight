@@ -6,6 +6,7 @@ import {
   Trash2, 
   Eye, 
   Loader2,
+  ArrowRight,
   ArrowLeft,
   Calendar,
   Users,
@@ -34,6 +35,7 @@ import {
 } from '@/lib/calculations';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function History() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -44,6 +46,7 @@ export default function History() {
   const [downloading, setDownloading] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const { theme } = useTheme();
 
   const loadHistory = useCallback(() => {
     setLoading(true);
@@ -176,7 +179,7 @@ export default function History() {
     setDownloading(true);
     try {
       const dataUrl = await toPng(cardRef.current, {
-        backgroundColor: '#ffffff',
+        backgroundColor: theme === 'dark' ? 'hsl(220, 18%, 13%)' : '#ffffff',
         pixelRatio: 2,
       });
       
@@ -364,8 +367,8 @@ export default function History() {
                           onClick={() => handleLoadSplit(entry)}
                           className="flex-1 gap-2"
                         >
-                          <Loader2 className="w-4 h-4" />
-                          Load Split
+                          <ArrowRight className="w-4 h-4" />
+                          Reuse Split
                         </Button>
                         <Button
                           variant="outline"
@@ -445,7 +448,7 @@ export default function History() {
                 {/* Shareable Card */}
                 <div
                   ref={cardRef}
-                  className="px-6 pt-6 pb-10 rounded-2xl bg-card shadow-medium space-y-4 border-2 border-border"
+                  className="px-6 pt-6 pb-16 rounded-2xl bg-card shadow-medium space-y-4 border-2 border-border"
                 >
                   <div className="text-center pb-4 border-b border-border">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-primary mb-3 shadow-glow">

@@ -12,10 +12,12 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { calculateFinalShares, calculateTotal, calculatePersonSubtotal, calculateTip, formatCurrency, generateShareableText } from '@/lib/calculations';
 import { useToast } from '@/hooks/use-toast';
 import { saveToHistory, updateMostRecentHistoryEntry } from '@/lib/storage';
+import { useTheme } from '@/context/ThemeContext';
 
 export function ShareStep() {
   const { data, setCurrentStep, resetSplit, setPaymentMethod, setPaymentDetails } = useSplit();
   const { toast } = useToast();
+  const { theme } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -87,7 +89,7 @@ export function ShareStep() {
     setDownloading(true);
     try {
       const dataUrl = await toPng(cardRef.current, {
-        backgroundColor: '#ffffff',
+        backgroundColor: theme === 'dark' ? 'hsl(220, 18%, 13%)' : '#ffffff',
         pixelRatio: 2,
       });
       
@@ -149,7 +151,7 @@ export function ShareStep() {
       {/* Shareable Card */}
       <div
         ref={cardRef}
-        className="px-6 pt-6 pb-10 rounded-2xl bg-card shadow-medium space-y-4"
+        className="px-6 pt-6 pb-16 rounded-2xl bg-card shadow-medium space-y-4"
       >
         <div className="text-center pb-3 border-b border-border">
           <h3 className="text-xl font-bold gradient-primary bg-clip-text text-white">

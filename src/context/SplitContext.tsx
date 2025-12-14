@@ -19,6 +19,7 @@ interface SplitContextType {
   addItems: (items: Omit<ReceiptItem, 'id' | 'assignedTo'>[]) => void;
   updateItem: (id: string, updates: Partial<ReceiptItem>) => void;
   removeItem: (id: string) => void;
+  clearAllItems: () => void;
   
   // Assignment actions
   assignItem: (itemId: string, personIds: string[]) => void;
@@ -140,6 +141,13 @@ export function SplitProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const clearAllItems = useCallback(() => {
+    setData(prev => ({
+      ...prev,
+      items: [],
+    }));
+  }, []);
+
   const assignItem = useCallback((itemId: string, personIds: string[]) => {
     setData(prev => ({
       ...prev,
@@ -244,6 +252,7 @@ export function SplitProvider({ children }: { children: React.ReactNode }) {
         addItems,
         updateItem,
         removeItem,
+        clearAllItems,
         assignItem,
         assignItems,
         setTax,

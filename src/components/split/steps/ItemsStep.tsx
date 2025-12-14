@@ -10,7 +10,7 @@ import { ReceiptItem, CURRENCIES } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 export function ItemsStep() {
-  const { data, addItem, updateItem, removeItem, addItems, setCurrency, setStoreName, setDateTime, setCurrentStep } = useSplit();
+  const { data, addItem, updateItem, removeItem, addItems, clearAllItems, setCurrency, setStoreName, setDateTime, setCurrentStep } = useSplit();
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemQty, setItemQty] = useState('1');
@@ -284,6 +284,22 @@ export function ItemsStep() {
 
       {/* Item List */}
       <div className="space-y-2 sm:space-y-3">
+        {data.items.length > 0 && (
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium text-muted-foreground">
+              {data.items.length} {data.items.length === 1 ? 'item' : 'items'}
+            </h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={clearAllItems}
+              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear All
+            </Button>
+          </div>
+        )}
         <AnimatePresence mode="popLayout">
           {data.items.map(item => (
             <motion.div

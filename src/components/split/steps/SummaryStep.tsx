@@ -188,7 +188,7 @@ export function SummaryStep() {
 
       {/* Navigation */}
       <div className="flex gap-3 pt-4">
-        <Button variant="outline" onClick={() => setCurrentStep('rounding')} className="flex-1">
+        <Button variant="outline" onClick={() => setCurrentStep('tax-tip')} className="flex-1">
           Back
         </Button>
         <Button onClick={() => setCurrentStep('share')} className="flex-1" variant="accent">
