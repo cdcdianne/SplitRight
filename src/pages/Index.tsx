@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Receipt, Users, Calculator, Share2 } from 'lucide-react';
+import { ArrowRight, Receipt, Users, Calculator, Share2, History } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
@@ -59,11 +59,18 @@ const Index = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
+            className="flex gap-3 justify-center"
           >
             <Button asChild size="xl" className="gap-3">
               <Link to="/split">
                 Start a Split
                 <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="xl" className="gap-3">
+              <Link to="/history">
+                <History className="w-5 h-5" />
+                History
               </Link>
             </Button>
           </motion.div>

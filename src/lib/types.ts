@@ -52,3 +52,12 @@ export const CURRENCIES = [
   { symbol: '₱', name: 'PHP', label: '₱ (Peso)' },
   { symbol: '฿', name: 'THB', label: '฿ (Baht)' },
 ];
+
+export interface HistoryEntry {
+  id: string;
+  timestamp: number;
+  data: SplitData;
+  total: number;
+  peopleCount: number;
+  itemsCount: number;
+}

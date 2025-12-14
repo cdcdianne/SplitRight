@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, Download, Check, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react';
 import { toPng } from 'html-to-image';
@@ -6,6 +6,7 @@ import { useSplit } from '@/context/SplitContext';
 import { Button } from '@/components/ui/button';
 import { calculateFinalShares, calculateTotal, calculatePersonSubtotal, calculateTip, formatCurrency, generateShareableText } from '@/lib/calculations';
 import { useToast } from '@/hooks/use-toast';
+import { saveToHistory } from '@/lib/storage';
 
 export function ShareStep() {
   const { data, setCurrentStep, resetSplit } = useSplit();
@@ -14,6 +15,19 @@ export function ShareStep() {
   const [copied, setCopied] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [savedToHistory, setSavedToHistory] = useState(false);
+
+  // Save to history when component mounts (user reached share step)
+  useEffect(() => {
+    if (!savedToHistory && data.people.length > 0 && data.items.length > 0) {
+      try {
+        saveToHistory(data);
+        setSavedToHistory(true);
+      } catch (error) {
+        console.error('Failed to save to history:', error);
+      }
+    }
+  }, [data, savedToHistory]);
 
   const shares = calculateFinalShares(data);
   const total = calculateTotal(data);
@@ -100,7 +114,7 @@ export function ShareStep() {
         className="p-6 rounded-2xl bg-card shadow-medium space-y-4"
       >
         <div className="text-center pb-3 border-b border-border">
-          <h3 className="text-xl font-bold gradient-primary bg-clip-text text-transparent">
+          <h3 className="text-xl font-bold gradient-primary bg-clip-text text-white">
             SplitRight
           </h3>
           <p className="text-sm text-muted-foreground">Receipt Split</p>
