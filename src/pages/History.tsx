@@ -260,6 +260,20 @@ export default function History() {
           </div>
         </motion.div>
 
+        {/* Note about history limit */}
+        {history.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mb-6 p-3 rounded-lg bg-secondary/50 border border-border"
+          >
+            <p className="text-xs sm:text-sm text-muted-foreground text-center">
+              <span className="font-medium">Note:</span> Only the 5 most recent splits are saved in history. Older entries are automatically removed.
+            </p>
+          </motion.div>
+        )}
+
         {/* History List */}
         {history.length === 0 ? (
           <motion.div
