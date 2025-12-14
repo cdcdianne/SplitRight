@@ -263,14 +263,19 @@ export default function History() {
         {/* Note about history limit */}
         {history.length > 0 && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-6 p-3 rounded-lg bg-secondary/50 border border-border"
+            className="mb-6 p-4 rounded-xl bg-primary/5 border border-primary/20"
           >
-            <p className="text-xs sm:text-sm text-muted-foreground text-center">
-              <span className="font-medium">Note:</span> Only the 5 most recent splits are saved in history. Older entries are automatically removed.
-            </p>
+            <div className="flex items-start gap-3">
+              <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                <HistoryIcon className="w-3 h-3 text-primary" />
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Note:</span> Only the 5 most recent splits are saved in history. Older entries are automatically removed.
+              </p>
+            </div>
           </motion.div>
         )}
 
@@ -279,19 +284,24 @@ export default function History() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
+            className="text-center py-20"
           >
-            <HistoryIcon className="w-16 h-16 mx-auto text-muted-foreground/50 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No history yet</h3>
-            <p className="text-muted-foreground mb-6">
-              Your completed splits will appear here
+            <div className="w-24 h-24 mx-auto rounded-full gradient-primary/10 flex items-center justify-center mb-6">
+              <HistoryIcon className="w-12 h-12 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">No history yet</h3>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+              Your completed splits will appear here. Start splitting a receipt to see your history!
             </p>
-            <Button asChild>
-              <Link to="/split">Start a Split</Link>
+            <Button asChild size="lg" className="gap-2">
+              <Link to="/split">
+                <Receipt className="w-5 h-5" />
+                Start a Split
+              </Link>
             </Button>
           </motion.div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {history.map((entry, index) => (
               <motion.div
                 key={entry.id}
@@ -299,75 +309,100 @@ export default function History() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <Card className="hover:shadow-medium transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardTitle className="flex items-center gap-2 mb-2">
-                          <Calendar className="w-4 h-4 text-muted-foreground" />
-                          {entry.data.storeName || 'No store name'}
-                        </CardTitle>
-                        <CardDescription className="flex items-center gap-4 flex-wrap mt-2">
-                          <span className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            {entry.peopleCount} {entry.peopleCount === 1 ? 'person' : 'people'}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Receipt className="w-4 h-4" />
-                            {entry.itemsCount} {entry.itemsCount === 1 ? 'item' : 'items'}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <DollarSign className="w-4 h-4" />
-                            {formatCurrency(entry.total, entry.data.currency)}
-                          </span>
-                        </CardDescription>
+                <Card className="hover:shadow-medium transition-all duration-200 border-2 hover:border-primary/20 group overflow-hidden">
+                  <div className="relative">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-10 h-10 rounded-lg gradient-primary/10 flex items-center justify-center shrink-0">
+                              <Receipt className="w-5 h-5 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <CardTitle className="text-lg font-bold truncate">
+                                {entry.data.storeName || 'Untitled Split'}
+                              </CardTitle>
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                  <Calendar className="w-3 h-3" />
+                                  {formatDate(entry.timestamp)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-4 text-sm">
+                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50">
+                              <Users className="w-4 h-4 text-primary" />
+                              <span className="font-medium">{entry.peopleCount}</span>
+                              <span className="text-muted-foreground text-xs">
+                                {entry.peopleCount === 1 ? 'person' : 'people'}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50">
+                              <Receipt className="w-4 h-4 text-primary" />
+                              <span className="font-medium">{entry.itemsCount}</span>
+                              <span className="text-muted-foreground text-xs">
+                                {entry.itemsCount === 1 ? 'item' : 'items'}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10">
+                              <DollarSign className="w-4 h-4 text-primary" />
+                              <span className="font-bold text-primary">
+                                {formatCurrency(entry.total, entry.data.currency)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleLoadSplit(entry)}
-                        className="flex-1"
-                      >
-                        <Loader2 className="w-4 h-4 mr-2" />
-                        Load Split
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleViewDetails(entry)}
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="outline" size="sm">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Delete this split?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              This will permanently delete this split from your history. This action cannot be undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction 
-                              onClick={() => handleDelete(entry.id)}
-                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                            >
-                              Delete
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
-                  </CardContent>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex gap-2">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() => handleLoadSplit(entry)}
+                          className="flex-1 gap-2"
+                        >
+                          <Loader2 className="w-4 h-4" />
+                          Load Split
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleViewDetails(entry)}
+                          className="gap-2"
+                        >
+                          <Eye className="w-4 h-4" />
+                          View
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="outline" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete this split?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This will permanently delete this split from your history. This action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction 
+                                onClick={() => handleDelete(entry.id)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </CardContent>
+                  </div>
                 </Card>
               </motion.div>
             ))}
@@ -378,7 +413,12 @@ export default function History() {
         <Dialog open={!!selectedEntry} onOpenChange={(open) => !open && setSelectedEntry(null)}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Split Summary</DialogTitle>
+              <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg gradient-primary/10 flex items-center justify-center">
+                  <Receipt className="w-5 h-5 text-primary" />
+                </div>
+                Split Summary
+              </DialogTitle>
             </DialogHeader>
             {selectedEntry && (
               <div className="space-y-6">
@@ -405,13 +445,16 @@ export default function History() {
                 {/* Shareable Card */}
                 <div
                   ref={cardRef}
-                  className="px-6 pt-6 pb-10 rounded-2xl bg-card shadow-medium space-y-4"
+                  className="px-6 pt-6 pb-10 rounded-2xl bg-card shadow-medium space-y-4 border-2 border-border"
                 >
-                  <div className="text-center pb-3 border-b border-border">
-                    <h3 className="text-xl font-bold gradient-primary bg-clip-text text-white">
+                  <div className="text-center pb-4 border-b border-border">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-primary mb-3 shadow-glow">
+                      <Receipt className="w-8 h-8 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-2xl font-bold gradient-primary bg-clip-text text-white mb-1">
                       SplitRight
                     </h3>
-                    <p className="text-sm text-muted-foreground">Receipt Split</p>
+                    <p className="text-sm text-gray-600 dark:text-muted-foreground">Receipt Split</p>
                   </div>
 
                   {/* Store Name and Date/Time */}
@@ -419,12 +462,12 @@ export default function History() {
                     <div className="pb-3 border-b border-border space-y-1">
                       {selectedEntry.data.storeName && (
                         <div className="text-center">
-                          <p className="text-sm font-semibold">{selectedEntry.data.storeName}</p>
+                          <p className="text-sm font-semibold text-gray-900 dark:text-foreground">{selectedEntry.data.storeName}</p>
                         </div>
                       )}
                       {selectedEntry.data.dateTime && (
                         <div className="text-center">
-                          <p className="text-xs text-muted-foreground">{selectedEntry.data.dateTime}</p>
+                          <p className="text-xs text-gray-600 dark:text-muted-foreground">{selectedEntry.data.dateTime}</p>
                         </div>
                       )}
                     </div>
@@ -450,9 +493,9 @@ export default function History() {
                               >
                                 {person.name[0]}
                               </div>
-                              <span className="font-medium">{person.name}</span>
+                              <span className="font-medium text-gray-900 dark:text-foreground">{person.name}</span>
                             </div>
-                            <span className="text-lg font-bold">
+                            <span className="text-lg font-bold text-gray-900 dark:text-foreground">
                               {formatCurrency(share, selectedEntry.data.currency)}
                             </span>
                           </div>
@@ -464,7 +507,7 @@ export default function History() {
                                 const splitCount = item.assignedTo.length;
                                 const itemShare = (item.price * item.quantity) / splitCount;
                                 return (
-                                  <div key={item.id} className="flex justify-between text-muted-foreground">
+                                  <div key={item.id} className="flex justify-between text-gray-600 dark:text-muted-foreground">
                                     <span>
                                       {item.name}
                                       {splitCount > 1 && ` (÷${splitCount})`}
@@ -476,7 +519,7 @@ export default function History() {
                               {(selectedEntry.data.tax > 0 || selectedEntry.data.tipValue > 0) && (
                                 <>
                                   {selectedEntry.data.tax > 0 && (
-                                    <div className="flex justify-between text-muted-foreground">
+                                    <div className="flex justify-between text-gray-600 dark:text-muted-foreground">
                                       <span>Tax</span>
                                       <span>
                                         {formatCurrency(
@@ -489,7 +532,7 @@ export default function History() {
                                     </div>
                                   )}
                                   {selectedEntry.data.tipValue > 0 && (
-                                    <div className="flex justify-between text-muted-foreground">
+                                    <div className="flex justify-between text-gray-600 dark:text-muted-foreground">
                                       <span>Tip</span>
                                       <span>
                                         {formatCurrency(
@@ -510,39 +553,42 @@ export default function History() {
                     })}
                   </div>
 
-                  <div className="pt-3 border-t border-border flex justify-between items-center">
-                    <span className="text-muted-foreground">Total</span>
-                    <span className="text-xl font-bold">
+                  <div className="pt-4 border-t-2 border-border flex justify-between items-center bg-primary/5 -mx-6 px-6 py-3 rounded-b-2xl">
+                    <span className="text-base font-semibold text-gray-700 dark:text-muted-foreground">Total</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-foreground">
                       {formatCurrency(selectedEntry.total, selectedEntry.data.currency)}
                     </span>
                   </div>
 
                   {/* Payment Information */}
                   {selectedEntry.data.paymentInfo && selectedEntry.data.paymentInfo.method && (
-                    <div className="pt-3 border-t border-border space-y-2">
-                      <div className="text-sm font-medium text-muted-foreground">Payment Method</div>
+                    <div className="pt-4 border-t-2 border-border space-y-2 bg-secondary/30 -mx-6 px-6 py-3 rounded-lg">
+                      <div className="text-sm font-semibold text-gray-700 dark:text-muted-foreground flex items-center gap-2">
+                        <DollarSign className="w-4 h-4" />
+                        Payment Method
+                      </div>
                       <div className="text-sm">
                         {selectedEntry.data.paymentInfo.method === 'bank' && selectedEntry.data.paymentInfo.bankAccountNumber && (
                           <div>
-                            <div className="font-medium">Bank Transfer</div>
-                            <div className="text-muted-foreground">Account: {selectedEntry.data.paymentInfo.bankAccountNumber}</div>
+                            <div className="font-semibold text-gray-900 dark:text-foreground">Bank Transfer</div>
+                            <div className="text-gray-700 dark:text-muted-foreground">Account: {selectedEntry.data.paymentInfo.bankAccountNumber}</div>
                           </div>
                         )}
                         {selectedEntry.data.paymentInfo.method === 'venmo' && selectedEntry.data.paymentInfo.venmoHandle && (
                           <div>
-                            <div className="font-medium">Venmo: @{selectedEntry.data.paymentInfo.venmoHandle}</div>
+                            <div className="font-semibold text-gray-900 dark:text-foreground">Venmo: @{selectedEntry.data.paymentInfo.venmoHandle}</div>
                           </div>
                         )}
                         {selectedEntry.data.paymentInfo.method === 'paypal' && selectedEntry.data.paymentInfo.paypalInfo && (
                           <div>
-                            <div className="font-medium">PayPal: {selectedEntry.data.paymentInfo.paypalInfo}</div>
+                            <div className="font-semibold text-gray-900 dark:text-foreground">PayPal: {selectedEntry.data.paymentInfo.paypalInfo}</div>
                           </div>
                         )}
                         {selectedEntry.data.paymentInfo.method === 'custom' && selectedEntry.data.paymentInfo.customMethod && (
                           <div>
-                            <div className="font-medium">{selectedEntry.data.paymentInfo.customMethod}</div>
+                            <div className="font-semibold text-gray-900 dark:text-foreground">{selectedEntry.data.paymentInfo.customMethod}</div>
                             {selectedEntry.data.paymentInfo.customDetails && (
-                              <div className="text-muted-foreground">{selectedEntry.data.paymentInfo.customDetails}</div>
+                              <div className="text-gray-700 dark:text-muted-foreground">{selectedEntry.data.paymentInfo.customDetails}</div>
                             )}
                           </div>
                         )}
@@ -552,11 +598,12 @@ export default function History() {
                 </div>
 
                 {/* Share Actions */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 pt-2">
                   <Button
-                    variant="outline"
+                    variant={copied ? "default" : "outline"}
                     onClick={handleCopyText}
-                    className="h-14"
+                    className="h-12 gap-2"
+                    disabled={copied}
                   >
                     {copied ? (
                       <>
@@ -574,7 +621,7 @@ export default function History() {
                     variant="outline"
                     onClick={handleDownloadImage}
                     disabled={downloading}
-                    className="h-14"
+                    className="h-12 gap-2"
                   >
                     <Download className="w-5 h-5" />
                     {downloading ? 'Saving...' : 'Save Image'}
